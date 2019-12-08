@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<head>
+    <title>Agency Backlog</title>
+</head>
+<body>
+<h:form>
+    <h:commandButton action="acceuil" value="acceuil" />
+    <h1>
+        Backlog de l'agence <h:outputLabel value="#{backlogMngtBean.agency.name}" />
+    </h1>
+    <h:dataTable id="xxxx" value="#{backlogMngtBean.backlog.backlogColumns}"
+                 var="Bcolumn" columnClasses="none, none, none, nb, nb, borderless"
+                 cellspacing="4" rowClasses="paire,impaire" headerClass="titre"  >
+        <h:column >
+            <f:facet name="header" >
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{Bcolumn.name}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Entries"/>
+            </f:facet>
+            <ul>
+                <ui:repeat value="#{Bcolumn.entries}" var="entry">
+                    <li>
+                        <div>
+                            <h:link value="#{entry.name}" outcome="entry">
+                                <f:param name="entry" value="#{entry}" />
+                                <f:param name="employe" value="#{backlogMngtBean.employe}"/>
+                            </h:link>
+                        </div>
+                        <h:outputText value="#{entry.description}"/>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Tools"/>
+            </f:facet>
+            <h:inputText id="newEntryName" value="#{backlogMngtBean.newEntryName}" />
+            <h:commandButton value="+" actionListener="#{backlogMngtBean.addNewEntryToColumn(Bcolumn.id)}"/>
+        </h:column>
+    </h:dataTable>
+    <h:inputText id="newColumnName" value="#{backlogMngtBean.newColumnName}" />
+    <h:commandButton value="+" actionListener="#{backlogMngtBean.newColumn}" /><br />
+
+</h:form>
+</body>
+</html>
